@@ -8,6 +8,11 @@
   </url>
   
   <url>
+    <loc>https://zuijinbuzai.github.io/2018/04/sia%E4%BD%BF%E7%94%A8%E4%BA%8C/</loc>
+    <lastmod>2018-04-12T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://zuijinbuzai.github.io/archives/</loc>
     <priority>0</priority>
   </url>
@@ -24,13 +29,13 @@
   </url>
   
   <url>
-    <loc>https://zuijinbuzai.github.io/tags/sia/</loc>
+    <loc>https://zuijinbuzai.github.io/categories/sia/</loc>
     <lastmod>2018-04-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://zuijinbuzai.github.io/categories/sia/</loc>
+    <loc>https://zuijinbuzai.github.io/tags/sia/</loc>
     <lastmod>2018-04-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
