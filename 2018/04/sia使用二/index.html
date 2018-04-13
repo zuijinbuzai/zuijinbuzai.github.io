@@ -1,0 +1,658 @@
+
+
+  
+    
+  
+
+
+  
+
+
+
+
+  
+
+
+  
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hugo 0.38 with theme Tranquilpeak 0.4.3-BETA">
+    <title>sia使用（二）</title>
+    <meta name="author" content="最近不在">
+    <meta name="keywords" content="">
+
+    <link rel="icon" href="https://zuijinbuzai.github.io/favicon.png">
+    
+
+    
+    <meta name="description" content="本文主要介绍sia数据目录修改，钱包重置，以及如何上传文件到sia。
+">
+    <meta property="og:description" content="本文主要介绍sia数据目录修改，钱包重置，以及如何上传文件到sia。
+">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="sia使用（二）">
+    <meta property="og:url" content="/2018/04/sia%E4%BD%BF%E7%94%A8%E4%BA%8C/">
+    <meta property="og:site_name" content="最近不在">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="最近不在">
+    <meta name="twitter:description" content="本文主要介绍sia数据目录修改，钱包重置，以及如何上传文件到sia。
+">
+    
+    
+
+    
+    
+
+    
+      <meta property="og:image" content="//www.gravatar.com/avatar/bd3dce169123751019f42a8f308005d3?s=640">
+    
+
+    
+    
+    
+
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://zuijinbuzai.github.io/css/style-jsjn0006wyhpyzivf6yceb31gvpjatbcs3qzjvlumobfnugccvobqwxnnaj8.min.css" />
+    
+    
+
+    
+      
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://zuijinbuzai.github.io/">最近不在</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://zuijinbuzai.github.io/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="//www.gravatar.com/avatar/bd3dce169123751019f42a8f308005d3?s=90" alt="作者的图片" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://zuijinbuzai.github.io/#about">
+          <img class="sidebar-profile-picture" src="//www.gravatar.com/avatar/bd3dce169123751019f42a8f308005d3?s=110" alt="作者的图片" />
+        </a>
+        <h4 class="sidebar-profile-name">最近不在</h4>
+        
+          <h5 class="sidebar-profile-bio">简单自由</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://zuijinbuzai.github.io/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">首页</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://zuijinbuzai.github.io/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">分类</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://zuijinbuzai.github.io/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">标签</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://zuijinbuzai.github.io/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">归档</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/zuijinbuzai" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.zhihu.com/people/xiao-bo-51" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-stack-overflow"></i>
+      
+      <span class="sidebar-button-desc">知乎</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://zuijinbuzai.github.io/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">关于</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://zuijinbuzai.github.io/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      sia使用（二）
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2018-04-12T00:00:00Z">
+        
+  四月 12, 2018
+
+      </time>
+    
+    
+  
+  
+    <span>发布在</span>
+    
+      <a class="category-link" href="https://zuijinbuzai.github.io/categories/sia">sia</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <p>本文主要介绍sia数据目录修改，钱包重置，以及如何上传文件到sia。
+</p>
+
+<h2 id="1-配置sia数据目录">1.配置sia数据目录</h2>
+
+<p>在启动过Sia-UI客户端后，会在系统user目录下生成客户端配置文件。
+<img src="https://upload-images.jianshu.io/upload_images/544191-00f67fae2198569a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Sia-UI配置目录" />
+用文本工具打开config.json文件，可以看到里面是一个json</p>
+
+<pre><code>{
+    &quot;homePlugin&quot;: &quot;Overview&quot;,
+    &quot;siad&quot;: {
+        &quot;path&quot;: &quot;E:\\siad.exe&quot;,
+        &quot;datadir&quot;: &quot;E:\\data\\Sia-UI\\sia&quot;,    \\这个就是siad同步节点等数据存放目录
+        &quot;rpcaddr&quot;: &quot;:9981&quot;,
+        &quot;hostaddr&quot;: &quot;:9982&quot;,
+        &quot;detached&quot;: false,
+        &quot;address&quot;: &quot;127.0.0.1:9980&quot;
+    },
+    &quot;closeToTray&quot;: true,
+    &quot;width&quot;: 1398,
+    &quot;height&quot;: 731,
+    &quot;x&quot;: -1427,
+    &quot;y&quot;: 91,
+    &quot;version&quot;: &quot;v1.3.2&quot;,
+    &quot;defaultSiadPath&quot;: &quot;E:\\siad.exe&quot;,
+    &quot;siac&quot;: {
+        &quot;path&quot;: &quot;E:\\siac.exe&quot;
+    },
+    &quot;address&quot;: null,
+    &quot;receiveAddress&quot;: &quot;7b3a0cbc4d07246213f3c87d5f0c2684d95d5cca2dbcad5dca03e7322ea7857730eb189b7fcd&quot;,
+    &quot;receiveAddresses&quot;: [
+        {
+            &quot;description&quot;: &quot;&quot;,
+            &quot;address&quot;: &quot;b78cfbae4b94f6b91485b9fb1793882902585c35fe90f735813e2071f74f5f0cbb1c33047a2b&quot;
+        },
+        {
+            &quot;description&quot;: &quot;收钱&quot;,
+            &quot;address&quot;: &quot;552942fec977a3b3a8df21d038c8d8682d36c22f97c6ad344e121218ab9dde53f2c876cf1db0&quot;
+        }
+    ]
+}
+</code></pre>
+
+<p>退出客户端，将datadir目录下的文件剪切到一个新目录，将新目录路径写到datadir字段下，保存config文件。然后再次启动客户端，读写数据就是新目录了。</p>
+
+<h2 id="2-重置钱包">2.重置钱包</h2>
+
+<p>打开上文提到的datadir目录
+<img src="https://upload-images.jianshu.io/upload_images/544191-06cfc04d364b6bb6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="siad data目录" />
+退出客户端，删除wallet文件夹，重启客户端，切换到tab导航栏，会提示重新新建钱包或加载已有钱包。</p>
+
+<p><strong>注意：没必要删除整个datadir目录，否则启动客户端又要经历漫长等待，重新下载整个节点数据</strong></p>
+
+<h2 id="3-导入其它钱包资产">3.导入其它钱包资产</h2>
+
+<p>数据框里输入另一个钱包的seed，就可以将资产转移到当前钱包
+<img src="https://upload-images.jianshu.io/upload_images/544191-27d91b50df9a98bc.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="转移" /></p>
+
+<h2 id="4-租用存储空间">4.租用存储空间</h2>
+
+<p><img src="https://upload-images.jianshu.io/upload_images/544191-f6c1dabd4082ca28.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="租用存储空间.jpg" />
+- 切换到Files选项卡，这个时候我们还没法直接上传文件。使用存储空间，需要支付一定的费用给空间提供者，点击Create Allowance，弹出费用确认框，输入金额确定。（金额自己评估，可反复调整）
+- 这个时候时候还是无法使用，注意看我截图上的“32contracts”，默认需要连上20个空间提供者，我们才能传输文件。
+- 一个文件默认会分成10份，沉余20份，每个主机只接收文件的30份中的0.1x。所以需要连上30个空间租用者，才能最终完成3x。
+- 如果想下载文件，只要连上了10台主机，我们就能将文件下下来。
+- 注意：即使一份几百k的文件甚至更小的，都将上传120MB的左右，所以上传会比较慢。需要耐心等待，大点文件相对较好。（这里以后的文章再做展开）</p>
+
+<h4 id="推荐一款年收益在10-的p2p">推荐一款年收益在10%的p2p：</h4>
+
+<p><img src="https://upload-images.jianshu.io/upload_images/544191-2287ad6faedde817.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="扫描二维码" /></p>
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">标签</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://zuijinbuzai.github.io/tags/sia/">sia</a>
+
+                  </div>
+                
+              
+            
+            
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://zuijinbuzai.github.io/2018/04/sia%E4%BD%BF%E7%94%A8%E4%BA%8C/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://zuijinbuzai.github.io/2018/04/sia%E4%BD%BF%E7%94%A8%E4%BA%8C/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://zuijinbuzai.github.io/2018/04/sia%E4%BD%BF%E7%94%A8%E4%BA%8C/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+            
+              
+                <div id="disqus_thread">
+  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2018 最近不在. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://zuijinbuzai.github.io/2018/04/sia%E4%BD%BF%E7%94%A8%E4%BA%8C/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://zuijinbuzai.github.io/2018/04/sia%E4%BD%BF%E7%94%A8%E4%BA%8C/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://zuijinbuzai.github.io/2018/04/sia%E4%BD%BF%E7%94%A8%E4%BA%8C/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fzuijinbuzai.github.io%2F2018%2F04%2Fsia%25E4%25BD%25BF%25E7%2594%25A8%25E4%25BA%258C%2F">
+          <i class="fa fa-facebook-official"></i><span>分享到 Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fzuijinbuzai.github.io%2F2018%2F04%2Fsia%25E4%25BD%25BF%25E7%2594%25A8%25E4%25BA%258C%2F">
+          <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https%3A%2F%2Fzuijinbuzai.github.io%2F2018%2F04%2Fsia%25E4%25BD%25BF%25E7%2594%25A8%25E4%25BA%258C%2F">
+          <i class="fa fa-google-plus"></i><span>分享到 Google&#43;</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="//www.gravatar.com/avatar/bd3dce169123751019f42a8f308005d3?s=110" alt="作者的图片" />
+    
+    <h4 id="about-card-name">最近不在</h4>
+    
+      <div id="about-card-bio">简单自由</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        技术开发
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        深圳
+      </div>
+    
+  </div>
+</div>
+
+    <div id="algolia-search-modal" class="modal-container">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="close-button"><i class="fa fa-close"></i></span>
+      <a href="https://algolia.com" target="_blank" rel="noopener" class="searchby-algolia text-color-light link-unstyled">
+        <span class="searchby-algolia-text text-color-light text-small">by</span>
+        <img class="searchby-algolia-logo" src="https://www.algolia.com/static_assets/images/press/downloads/algolia-light.svg">
+      </a>
+      <i class="search-icon fa fa-search"></i>
+      <form id="algolia-search-form">
+        <input type="text" id="algolia-search-input" name="search"
+          class="form-control input--large search-input" placeholder="搜索" />
+      </form>
+    </div>
+    <div class="modal-body">
+      <div class="no-result text-color-light text-center"></div>
+      <div class="results">
+        
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://zuijinbuzai.github.io/2018/04/sia%E4%BD%BF%E7%94%A8%E4%BA%8C/">
+                <h3 class="media-heading">sia使用（二）</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Apr 4, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather"><p>本文主要介绍sia数据目录修改，钱包重置，以及如何上传文件到sia。
+</p></div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+      </div>
+    </div>
+    <div class="modal-footer">
+      <p class="results-count text-medium"
+         data-message-zero=""
+         data-message-one=""
+         data-message-other="">
+         1 posts found
+      </p>
+    </div>
+  </div>
+</div>
+    
+  
+    
+    <div id="cover" style="background-image:url('https://zuijinbuzai.github.io/images/cover.jpg');"></div>
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://zuijinbuzai.github.io/js/script-qi9wbxp2ya2j6p7wx1i6tgavftewndznf4v0hy2gvivk1rxgc3lm7njqb6bz.min.js"></script>
+
+
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+      <script>
+        var disqus_config = function () {
+          this.page.url = 'https:\/\/zuijinbuzai.github.io\/2018\/04\/sia%E4%BD%BF%E7%94%A8%E4%BA%8C\/';
+          
+            this.page.identifier = '\/2018\/04\/sia%E4%BD%BF%E7%94%A8%E4%BA%8C\/'
+          
+        };
+        (function() {
+          
+          
+          if (window.location.hostname == "localhost") {
+            return;
+          }
+          var d = document, s = d.createElement('script');
+          var disqus_shortname = 'zuijinbuzai';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+    
+  
+
+
+
+    
+  </body>
+</html>
+
