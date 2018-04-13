@@ -22,7 +22,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="Hugo 0.38 with theme Tranquilpeak 0.4.3-BETA">
-    <title>sia使用（二）</title>
+    <title>sia介绍-钱包（一）</title>
     <meta name="author" content="最近不在">
     <meta name="keywords" content="">
 
@@ -30,17 +30,17 @@
     
 
     
-    <meta name="description" content="本文主要介绍sia数据目录修改，钱包重置，以及如何上传文件到sia。
+    <meta name="description" content="本文主要简要介绍sia以及钱包相关使用
 ">
-    <meta property="og:description" content="本文主要介绍sia数据目录修改，钱包重置，以及如何上传文件到sia。
+    <meta property="og:description" content="本文主要简要介绍sia以及钱包相关使用
 ">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="sia使用（二）">
-    <meta property="og:url" content="/2018/04/sia%E4%BD%BF%E7%94%A8%E4%BA%8C/">
+    <meta property="og:title" content="sia介绍-钱包（一）">
+    <meta property="og:url" content="/2018/04/sia%E4%BB%8B%E7%BB%8D-%E9%92%B1%E5%8C%85%E4%B8%80/">
     <meta property="og:site_name" content="最近不在">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="最近不在">
-    <meta name="twitter:description" content="本文主要介绍sia数据目录修改，钱包重置，以及如何上传文件到sia。
+    <meta name="twitter:description" content="本文主要简要介绍sia以及钱包相关使用
 ">
     
     
@@ -216,7 +216,7 @@
             <div class="post-header main-content-wrap text-left">
   
     <h1 class="post-title" itemprop="headline">
-      sia使用（二）
+      sia介绍-钱包（一）
     </h1>
   
   
@@ -243,73 +243,67 @@
           
           <div class="post-content markdown" itemprop="articleBody">
             <div class="main-content-wrap">
-              <p>本文主要介绍sia数据目录修改，钱包重置，以及如何上传文件到sia。
+              <p>本文主要简要介绍sia以及钱包相关使用
 </p>
 
-<h2 id="1-配置sia数据目录">1.配置sia数据目录</h2>
+<h2 id="1-简介">1. 简介</h2>
 
-<p>在启动过Sia-UI客户端后，会在系统user目录下生成客户端配置文件。
-<img src="https://upload-images.jianshu.io/upload_images/544191-00f67fae2198569a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Sia-UI配置目录" />
-用文本工具打开config.json文件，可以看到里面是一个json</p>
+<p>SIA是一个云存储方案，是运用全球领先的区块链方式实现去中心化的商用方案。</p>
 
-<pre><code>{
-    &quot;homePlugin&quot;: &quot;Overview&quot;,
-    &quot;siad&quot;: {
-        &quot;path&quot;: &quot;E:\\siad.exe&quot;,
-        &quot;datadir&quot;: &quot;E:\\data\\Sia-UI\\sia&quot;,    \\这个就是siad同步节点等数据存放目录
-        &quot;rpcaddr&quot;: &quot;:9981&quot;,
-        &quot;hostaddr&quot;: &quot;:9982&quot;,
-        &quot;detached&quot;: false,
-        &quot;address&quot;: &quot;127.0.0.1:9980&quot;
-    },
-    &quot;closeToTray&quot;: true,
-    &quot;width&quot;: 1398,
-    &quot;height&quot;: 731,
-    &quot;x&quot;: -1427,
-    &quot;y&quot;: 91,
-    &quot;version&quot;: &quot;v1.3.2&quot;,
-    &quot;defaultSiadPath&quot;: &quot;E:\\siad.exe&quot;,
-    &quot;siac&quot;: {
-        &quot;path&quot;: &quot;E:\\siac.exe&quot;
-    },
-    &quot;address&quot;: null,
-    &quot;receiveAddress&quot;: &quot;7b3a0cbc4d07246213f3c87d5f0c2684d95d5cca2dbcad5dca03e7322ea7857730eb189b7fcd&quot;,
-    &quot;receiveAddresses&quot;: [
-        {
-            &quot;description&quot;: &quot;&quot;,
-            &quot;address&quot;: &quot;b78cfbae4b94f6b91485b9fb1793882902585c35fe90f735813e2071f74f5f0cbb1c33047a2b&quot;
-        },
-        {
-            &quot;description&quot;: &quot;收钱&quot;,
-            &quot;address&quot;: &quot;552942fec977a3b3a8df21d038c8d8682d36c22f97c6ad344e121218ab9dde53f2c876cf1db0&quot;
-        }
-    ]
-}
-</code></pre>
+<p>sia的项目地址在：<a href="https://github.com/NebulousLabs/Sia">https://github.com/NebulousLabs/Sia</a>
+提供的工具</p>
 
-<p>退出客户端，将datadir目录下的文件剪切到一个新目录，将新目录路径写到datadir字段下，保存config文件。然后再次启动客户端，读写数据就是新目录了。</p>
+<ul>
+<li>siad实际的工作者</li>
+<li>siac用于提供与siad交互的命令行工具</li>
+<li>Sia-UI桌面客户端</li>
+</ul>
 
-<h2 id="2-重置钱包">2.重置钱包</h2>
+<p><a href="https://sia.tech/get-started/">工具下载地址</a></p>
 
-<p>打开上文提到的datadir目录
-<img src="https://upload-images.jianshu.io/upload_images/544191-06cfc04d364b6bb6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="siad data目录" />
-退出客户端，删除wallet文件夹，重启客户端，切换到tab导航栏，会提示重新新建钱包或加载已有钱包。</p>
+<h2 id="2-使用">2. 使用</h2>
 
-<p><strong>注意：没必要删除整个datadir目录，否则启动客户端又要经历漫长等待，重新下载整个节点数据</strong></p>
+<h4 id="1-打开钱包页面">1.打开钱包页面</h4>
 
-<h2 id="3-导入其它钱包资产">3.导入其它钱包资产</h2>
+<p>运行Sia-UI客户端，先切换到Wallet界面
+<img src="https://upload-images.jianshu.io/upload_images/544191-d07e91096898a749.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="钱包页面" /></p>
 
-<p>数据框里输入另一个钱包的seed，就可以将资产转移到当前钱包
-<img src="https://upload-images.jianshu.io/upload_images/544191-27d91b50df9a98bc.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="转移" /></p>
+<h4 id="2-新建钱包">2.新建钱包</h4>
 
-<h2 id="4-租用存储空间">4.租用存储空间</h2>
+<p>这里会提示新建一个钱包，或者加载已有的钱包，这里选择新建
+<img src="https://upload-images.jianshu.io/upload_images/544191-3e2c7cc56b7d8b7d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/700" alt="" /></p>
 
-<p><img src="https://upload-images.jianshu.io/upload_images/544191-f6c1dabd4082ca28.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="租用存储空间.jpg" />
-- 切换到Files选项卡，这个时候我们还没法直接上传文件。使用存储空间，需要支付一定的费用给空间提供者，点击Create Allowance，弹出费用确认框，输入金额确定。（金额自己评估，可反复调整）
-- 这个时候时候还是无法使用，注意看我截图上的“32contracts”，默认需要连上20个空间提供者，我们才能传输文件。
-- 一个文件默认会分成10份，沉余20份，每个主机只接收文件的30份中的0.1x。所以需要连上30个空间租用者，才能最终完成3x。
-- 如果想下载文件，只要连上了10台主机，我们就能将文件下下来。
-- 注意：即使一份几百k的文件甚至更小的，都将上传120MB的左右，所以上传会比较慢。需要耐心等待，大点文件相对较好。（这里以后的文章再做展开）</p>
+<p>将上面的seed，复制粘贴到电脑上的某处妥善保存起来，不要丢失。这里seed和password为同一串字符，是你以后登陆的唯一凭证。然后点击确认。</p>
+
+<h4 id="3-确认账号密码">3.确认账号密码</h4>
+
+<p>再次输入钱包账号和密码（保存起来的那一个串），确认，账号就创建好了。</p>
+
+<p><img src="https://upload-images.jianshu.io/upload_images/544191-f7a52ebb59740357.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/480" alt="" /></p>
+
+<h4 id="4-解锁钱包">4.解锁钱包</h4>
+
+<p>上一步确认后会提示我们解锁钱包，粘贴长串密码就解锁了。每次退出会话（客户端），再次进来，都需要输入密码解锁。</p>
+
+<p><img src="https://upload-images.jianshu.io/upload_images/544191-e7b6e636c5e25011.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/480" alt="" /></p>
+
+<h4 id="5-设置简易密码">5.设置简易密码</h4>
+
+<p>如果觉得密码比较复杂，sia支持在当前电脑另外设置一个解锁密码。点击Change password</p>
+
+<p><strong>注意：这里并不会把原有的密码给改掉（原始密码始终不变，唯一凭证），只是另外开了一个简易密码，方便使用。
+接受币</strong>
+<img src="https://upload-images.jianshu.io/upload_images/544191-d07e4b93db7f9434.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/700" alt="" /></p>
+
+<h4 id="6">6.</h4>
+
+<p>点击new出来新的地址，然后save，别人就可以通过这个地址给你转币。
+<img src="https://upload-images.jianshu.io/upload_images/544191-53b529f20c7c578e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" /></p>
+
+<h4 id="7-发送币">7. 发送币</h4>
+
+<p>输入发送金币数量和接收方钱包地址
+<img src="https://upload-images.jianshu.io/upload_images/544191-3f394b4c387aa272.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="" /></p>
 
 <h4 id="推荐一款年收益在10-的p2p">推荐一款年收益在10%的p2p：</h4>
 
@@ -338,7 +332,7 @@
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://zuijinbuzai.github.io/2018/04/sia%E4%BB%8B%E7%BB%8D-%E9%92%B1%E5%8C%85%E4%B8%80/" data-tooltip="sia介绍-钱包（一）">
+                <a class="post-action-btn btn btn--disabled">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
@@ -346,7 +340,7 @@
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--disabled">
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://zuijinbuzai.github.io/2018/04/sia%E4%BD%BF%E7%94%A8%E4%BA%8C/" data-tooltip="sia使用（二）">
               
                   <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
                   <i class="fa fa-angle-right"></i>
@@ -364,19 +358,19 @@
         </li>
         
           <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://zuijinbuzai.github.io/2018/04/sia%E4%BD%BF%E7%94%A8%E4%BA%8C/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://zuijinbuzai.github.io/2018/04/sia%E4%BB%8B%E7%BB%8D-%E9%92%B1%E5%8C%85%E4%B8%80/">
               <i class="fa fa-facebook-official"></i>
             </a>
           </li>
         
           <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://zuijinbuzai.github.io/2018/04/sia%E4%BD%BF%E7%94%A8%E4%BA%8C/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://zuijinbuzai.github.io/2018/04/sia%E4%BB%8B%E7%BB%8D-%E9%92%B1%E5%8C%85%E4%B8%80/">
               <i class="fa fa-twitter"></i>
             </a>
           </li>
         
           <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://zuijinbuzai.github.io/2018/04/sia%E4%BD%BF%E7%94%A8%E4%BA%8C/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://zuijinbuzai.github.io/2018/04/sia%E4%BB%8B%E7%BB%8D-%E9%92%B1%E5%8C%85%E4%B8%80/">
               <i class="fa fa-google-plus"></i>
             </a>
           </li>
@@ -424,7 +418,7 @@
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://zuijinbuzai.github.io/2018/04/sia%E4%BB%8B%E7%BB%8D-%E9%92%B1%E5%8C%85%E4%B8%80/" data-tooltip="sia介绍-钱包（一）">
+                <a class="post-action-btn btn btn--disabled">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
@@ -432,7 +426,7 @@
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--disabled">
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://zuijinbuzai.github.io/2018/04/sia%E4%BD%BF%E7%94%A8%E4%BA%8C/" data-tooltip="sia使用（二）">
               
                   <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
                   <i class="fa fa-angle-right"></i>
@@ -450,19 +444,19 @@
         </li>
         
           <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://zuijinbuzai.github.io/2018/04/sia%E4%BD%BF%E7%94%A8%E4%BA%8C/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://zuijinbuzai.github.io/2018/04/sia%E4%BB%8B%E7%BB%8D-%E9%92%B1%E5%8C%85%E4%B8%80/">
               <i class="fa fa-facebook-official"></i>
             </a>
           </li>
         
           <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://zuijinbuzai.github.io/2018/04/sia%E4%BD%BF%E7%94%A8%E4%BA%8C/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://zuijinbuzai.github.io/2018/04/sia%E4%BB%8B%E7%BB%8D-%E9%92%B1%E5%8C%85%E4%B8%80/">
               <i class="fa fa-twitter"></i>
             </a>
           </li>
         
           <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://zuijinbuzai.github.io/2018/04/sia%E4%BD%BF%E7%94%A8%E4%BA%8C/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://zuijinbuzai.github.io/2018/04/sia%E4%BB%8B%E7%BB%8D-%E9%92%B1%E5%8C%85%E4%B8%80/">
               <i class="fa fa-google-plus"></i>
             </a>
           </li>
@@ -492,19 +486,19 @@
   <ul class="share-options">
     
       <li class="share-option">
-        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fzuijinbuzai.github.io%2F2018%2F04%2Fsia%25E4%25BD%25BF%25E7%2594%25A8%25E4%25BA%258C%2F">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fzuijinbuzai.github.io%2F2018%2F04%2Fsia%25E4%25BB%258B%25E7%25BB%258D-%25E9%2592%25B1%25E5%258C%2585%25E4%25B8%2580%2F">
           <i class="fa fa-facebook-official"></i><span>分享到 Facebook</span>
         </a>
       </li>
     
       <li class="share-option">
-        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fzuijinbuzai.github.io%2F2018%2F04%2Fsia%25E4%25BD%25BF%25E7%2594%25A8%25E4%25BA%258C%2F">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fzuijinbuzai.github.io%2F2018%2F04%2Fsia%25E4%25BB%258B%25E7%25BB%258D-%25E9%2592%25B1%25E5%258C%2585%25E4%25B8%2580%2F">
           <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
         </a>
       </li>
     
       <li class="share-option">
-        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https%3A%2F%2Fzuijinbuzai.github.io%2F2018%2F04%2Fsia%25E4%25BD%25BF%25E7%2594%25A8%25E4%25BA%258C%2F">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https%3A%2F%2Fzuijinbuzai.github.io%2F2018%2F04%2Fsia%25E4%25BB%258B%25E7%25BB%258D-%25E9%2592%25B1%25E5%258C%2585%25E4%25B8%2580%2F">
           <i class="fa fa-google-plus"></i><span>分享到 Google&#43;</span>
         </a>
       </li>
@@ -646,9 +640,9 @@ $(document).ready(function() {
     
       <script>
         var disqus_config = function () {
-          this.page.url = 'https:\/\/zuijinbuzai.github.io\/2018\/04\/sia%E4%BD%BF%E7%94%A8%E4%BA%8C\/';
+          this.page.url = 'https:\/\/zuijinbuzai.github.io\/2018\/04\/sia%E4%BB%8B%E7%BB%8D-%E9%92%B1%E5%8C%85%E4%B8%80\/';
           
-            this.page.identifier = '\/2018\/04\/sia%E4%BD%BF%E7%94%A8%E4%BA%8C\/'
+            this.page.identifier = '\/2018\/04\/sia%E4%BB%8B%E7%BB%8D-%E9%92%B1%E5%8C%85%E4%B8%80\/'
           
         };
         (function() {
